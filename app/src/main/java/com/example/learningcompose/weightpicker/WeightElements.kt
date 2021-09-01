@@ -2,14 +2,18 @@ package com.example.learningcompose.weightpicker
 
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.withRotation
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -17,9 +21,9 @@ import kotlin.math.sin
 fun Scale(
     modifier: Modifier = Modifier,
     style: ScaleStyle = ScaleStyle(),
-    minWeight: Int = 20,
-    maxWeight: Int = 250,
-    initialWeight: Int = 80,
+    minWeight: Int = 10,
+    maxWeight: Int = 100,
+    initialWeight: Int = 85,
     onWeightChange: (Int) -> Unit
 ) {
     val radius = style.radius
@@ -34,8 +38,44 @@ fun Scale(
     var angle by remember {
         mutableStateOf(0f)
     }
+    var dragStartedAngle by remember {
+        mutableStateOf(0f)
+    }
+    var oldAngle by remember {
+        mutableStateOf(angle)
+    }
 
-    Canvas(modifier = modifier) {
+    Canvas(
+        modifier = modifier
+            .pointerInput(true) {
+                detectDragGestures(
+                    onDragStart = { dragStartOffset ->
+                        dragStartedAngle = Math.toDegrees(
+                            (-atan2(
+                                x = (circleCenter.x - dragStartOffset.x),
+                                y = (circleCenter.y - dragStartOffset.y)
+                            )).toDouble()
+                        ).toFloat()
+                    },
+                    onDragEnd = {
+                        oldAngle = angle
+                    }
+                ) { change, _ ->
+                    val dragAngle = Math.toDegrees(
+                        (-atan2(
+                            x = (circleCenter.x - change.position.x),
+                            y = (circleCenter.y - change.position.y)
+                        )).toDouble()
+                    ).toFloat()
+                    val calculatedAngle = (dragStartedAngle - dragAngle) + oldAngle
+                    Log.d("Scale_D", "angle: $calculatedAngle")
+                    angle = calculatedAngle.coerceIn(
+                        minimumValue = initialWeight - maxWeight.toFloat(),
+                        maximumValue = initialWeight - minWeight.toFloat()
+                    )
+                }
+            }
+    ) {
         center = this.center
         circleCenter = Offset(center.x, scaleWidth.toPx() / 2f + radius.toPx())
 

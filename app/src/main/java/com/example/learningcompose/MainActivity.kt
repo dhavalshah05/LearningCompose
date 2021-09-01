@@ -24,12 +24,10 @@ class MainActivity : ComponentActivity() {
             ) {
                 Scale(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .align(Alignment.Center),
                     style = ScaleStyle(
-                        scaleWidth = 150.dp,
-                        textSize = 12.sp,
-                        radius = 100.dp
+                        scaleWidth = 150.dp
                     )
                 ) {
 
