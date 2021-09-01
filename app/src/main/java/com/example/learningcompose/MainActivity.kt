@@ -1,16 +1,37 @@
 package com.example.learningcompose
 
+import android.icu.number.Scale
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.learningcompose.weightpicker.Scale
+import com.example.learningcompose.weightpicker.ScaleStyle
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CircleFindAngleAndDrawLine {
-                toast(it.toString())
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Scale(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
+                    style = ScaleStyle(
+                        scaleWidth = 150.dp,
+                        radius = 100.dp
+                    )
+                ) {
+
+                }
             }
         }
     }
