@@ -28,8 +28,8 @@ class MainActivity : ComponentActivity() {
                         .align(Alignment.Center),
                     style = ScaleStyle(
                         scaleWidth = 150.dp,
-                        radius = 100.dp,
-                        textSize = 10.sp
+                        textSize = 12.sp,
+                        radius = 100.dp
                     )
                 ) {
 

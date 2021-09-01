@@ -55,6 +55,22 @@ fun Scale(
             outerRadius,
             circleCenter
         )
+
+        val red = Math.toRadians(0.0 - 90.0)
+        val indicatorLineStart = Offset(
+            x = (innerRadius * cos(red) + circleCenter.x).toFloat(),
+            y = (innerRadius * sin(red) + circleCenter.y).toFloat()
+        )
+        val indicatorEndStart = Offset(
+            x = ((radius.toPx() - 15.dp.toPx()) * cos(red) + circleCenter.x).toFloat(),
+            y = ((radius.toPx() - 15.dp.toPx()) * sin(red) + circleCenter.y).toFloat()
+        )
+        drawLine(
+            start = indicatorLineStart,
+            end = indicatorEndStart,
+            color = style.scaleIndicatorColor,
+            strokeWidth = 2.dp.toPx()
+        )
     }
 }
 
