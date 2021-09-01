@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.learningcompose.weightpicker.Scale
 import com.example.learningcompose.weightpicker.ScaleStyle
 
@@ -27,7 +28,8 @@ class MainActivity : ComponentActivity() {
                         .align(Alignment.Center),
                     style = ScaleStyle(
                         scaleWidth = 150.dp,
-                        radius = 100.dp
+                        radius = 100.dp,
+                        textSize = 10.sp
                     )
                 ) {
 

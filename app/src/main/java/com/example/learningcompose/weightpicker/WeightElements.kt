@@ -6,10 +6,10 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.drawscope.DrawContext
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.core.graphics.withRotation
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -46,11 +46,19 @@ fun Scale(
         drawScaleCircle(circleCenter, radius.toPx(), scaleWidth.toPx())
 
         // Draw Lines
-        drawScaleLines(minWeight, maxWeight, initialWeight, angle, style, outerRadius, circleCenter)
+        drawScaleLinesAndDigits(
+            minWeight,
+            maxWeight,
+            initialWeight,
+            angle,
+            style,
+            outerRadius,
+            circleCenter
+        )
     }
 }
 
-private fun DrawScope.drawScaleLines(
+private fun DrawScope.drawScaleLinesAndDigits(
     minWeight: Int,
     maxWeight: Int,
     initialWeight: Int,
@@ -93,6 +101,33 @@ private fun DrawScope.drawScaleLines(
             end = lineEndOffset,
             color = lineColor
         )
+
+        drawContext.canvas.nativeCanvas.apply {
+            if (lineType is LineType.TenStep) {
+                val x = (outerRadius - lineLength - 5.dp.toPx() - style.textSize.toPx()) *
+                        cos(angleInRed) + circleCenter.x
+                val y = (outerRadius - lineLength - 5.dp.toPx() - style.textSize.toPx()) *
+                        sin(angleInRed) + circleCenter.y
+
+                withRotation(
+                    degrees = Math.toDegrees(angleInRed).toFloat() + 90,
+                    pivotX = x.toFloat(),
+                    pivotY = y.toFloat()
+                ) {
+                    drawText(
+                        "$i",
+                        x.toFloat(),
+                        y.toFloat(),
+                        Paint().apply {
+                            color = Color.BLACK
+                            textSize = style.textSize.toPx()
+                            textAlign = Paint.Align.CENTER
+                        }
+                    )
+                }
+
+            }
+        }
     }
 }
 
