@@ -6,7 +6,6 @@ import androidx.compose.ui.unit.dp
 
 data class ClockStyle(
     val radius: Dp = 100.dp,
-    val clockColor: Color = Color.LightGray,
     val minuteLineColor: Color = Color.Gray,
     val hourLineColor: Color = Color.Blue,
     val minuteLineLength: Dp = 12.dp,

@@ -1,9 +1,12 @@
 package com.example.learningcompose.clock
 
+import android.graphics.Color
+import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.nativeCanvas
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -21,11 +24,17 @@ fun Clock(
         val circleCenter = center
 
         // Draw Circle
-        drawCircle(
-            color = style.clockColor,
-            radius = radius,
-            center = circleCenter
-        )
+        drawContext.canvas.nativeCanvas.apply {
+            drawCircle(
+                circleCenter.x,
+                circleCenter.y,
+                radius,
+                Paint().apply {
+                    color = Color.WHITE
+                    setShadowLayer(60f, 0f, 0f, android.graphics.Color.argb(50, 0, 0, 0))
+                }
+            )
+        }
 
         // Draw Lines
         for (angle in 0..359 step 6) {
