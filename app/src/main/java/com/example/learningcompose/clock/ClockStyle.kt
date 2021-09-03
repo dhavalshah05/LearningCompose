@@ -10,5 +10,7 @@ data class ClockStyle(
     val minuteLineColor: Color = Color.Gray,
     val hourLineColor: Color = Color.Blue,
     val minuteLineLength: Dp = 12.dp,
-    val hourLineLength: Dp = 20.dp
+    val hourLineLength: Dp = 20.dp,
+    val hourTickerColor: Color = Color.Black,
+    val minuteTickerColor: Color = Color.Red
 )

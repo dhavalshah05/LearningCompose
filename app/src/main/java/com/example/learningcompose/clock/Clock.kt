@@ -10,7 +10,9 @@ import kotlin.math.sin
 @Composable
 fun Clock(
     modifier: Modifier = Modifier,
-    style: ClockStyle = ClockStyle()
+    style: ClockStyle = ClockStyle(),
+    hour: Int = 3,
+    minute: Int = 14
 ) {
     Canvas(
         modifier = modifier
@@ -56,5 +58,29 @@ fun Clock(
                 end = lineEnd
             )
         }
+
+        // Draw Minute Tick
+        val minuteTickAngleInRed = Math.toRadians((minute * 6).toDouble() - 90.0)
+        val minusTickX =
+            (radius - style.hourLineLength.toPx() - 15) * cos(minuteTickAngleInRed) + circleCenter.x
+        val minusTickY =
+            (radius - style.hourLineLength.toPx() - 15) * sin(minuteTickAngleInRed) + circleCenter.y
+        drawLine(
+            color = style.minuteTickerColor,
+            start = circleCenter,
+            end = Offset(minusTickX.toFloat(), minusTickY.toFloat())
+        )
+
+        // Draw Hour Tick
+        val hourTickAngleInRed = Math.toRadians((hour * 30).toDouble() - 90.0)
+        val x1 =
+            (radius - style.hourLineLength.toPx() - 60) * cos(hourTickAngleInRed) + circleCenter.x
+        val y1 =
+            (radius - style.hourLineLength.toPx() - 60) * sin(hourTickAngleInRed) + circleCenter.y
+        drawLine(
+            color = style.hourTickerColor,
+            start = circleCenter,
+            end = Offset(x1.toFloat(), y1.toFloat())
+        )
     }
 }
