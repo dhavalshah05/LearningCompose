@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.learningcompose.category.CategoryChips
 import com.example.learningcompose.circularprogress.CircularProgressIndicator
 import com.example.learningcompose.circularprogress.CircularProgressIndicatorStyle
 import com.example.learningcompose.clock.Clock
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ListDemo()
+            CategoryChips()
         }
     }
 
