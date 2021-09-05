@@ -11,18 +11,13 @@ import androidx.compose.ui.unit.sp
 import com.example.learningcompose.circularprogress.CircularProgressIndicator
 import com.example.learningcompose.circularprogress.CircularProgressIndicatorStyle
 import com.example.learningcompose.clock.Clock
+import com.example.learningcompose.textfield.TextFieldDemo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CircularProgressIndicator(
-                style = CircularProgressIndicatorStyle(
-                    fontSize = 25.sp,
-                    stroke = 10.dp,
-                ),
-                progress = 15F
-            )
+            TextFieldDemo()
         }
     }
 
