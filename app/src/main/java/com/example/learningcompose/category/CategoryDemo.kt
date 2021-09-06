@@ -2,10 +2,7 @@ package com.example.learningcompose.category
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -35,7 +32,8 @@ fun CategoryChips() {
 
     Box(modifier = Modifier.fillMaxWidth()) {
         LazyRow(
-            contentPadding = PaddingValues(end = 15.dp)
+            contentPadding = PaddingValues(15.dp),
+            horizontalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(categories.size) {
                 val category = categories[it]
@@ -43,7 +41,6 @@ fun CategoryChips() {
 
                 Box(
                     modifier = Modifier
-                        .padding(start = 15.dp, top = 15.dp, bottom = 15.dp)
                         .clip(RoundedCornerShape(size = 5.dp))
                         .background(color)
                         .clickable {
