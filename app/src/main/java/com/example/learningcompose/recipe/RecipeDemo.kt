@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.learningcompose.R
 
 private data class Recipe(
@@ -65,14 +66,37 @@ private fun RecipeCard(recipe: Recipe) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.z_dummy_recipe),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(200.dp)
-                    .shadow(4.dp, roundCornerShape),
-                contentScale = ContentScale.Crop
-            )
+            ConstraintLayout {
+                val imageRef = createRef()
+                val stickerRef = createRef()
+                Image(
+                    painter = painterResource(id = R.drawable.z_dummy_recipe),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .constrainAs(imageRef) {
+                            top.linkTo(parent.top)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(parent.bottom)
+                        }
+                        .size(200.dp)
+                        .shadow(4.dp, roundCornerShape),
+                    contentScale = ContentScale.Crop
+                )
+                Text(
+                    text = "All Favourite",
+                    fontSize = 10.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .constrainAs(stickerRef) {
+                            start.linkTo(imageRef.end)
+                            end.linkTo(imageRef.end)
+                            top.linkTo(imageRef.top, margin = 20.dp)
+                        }
+                        .background(Color(0xFFA55A40), RoundedCornerShape(40.dp))
+                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                )
+            }
             Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = recipe.name,
