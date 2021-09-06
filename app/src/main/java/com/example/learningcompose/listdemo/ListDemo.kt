@@ -1,12 +1,13 @@
 package com.example.learningcompose.listdemo
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -15,14 +16,69 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ListDemo() {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
+
+    var items by remember {
+        mutableStateOf(getListItems())
+    }
+
+    var itemIndexText by remember {
+        mutableStateOf("")
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
-        this.
-        itemsIndexed(getListItems()) { _, item ->
-            ListITem(item = item)
+        OutlinedTextField(
+            value = itemIndexText,
+            onValueChange = {
+                itemIndexText = it
+            },
+            label = {
+                Text(text = "Enter index here")
+            },
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth()
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            OutlinedButton(onClick = {
+                if (itemIndexText.isNotBlank()) {
+                    val newItem = ListItem("New Item with index: $itemIndexText")
+                    items = items.toMutableList().apply {
+                        add(itemIndexText.toInt(), newItem)
+                    }
+                }
+            }) {
+                Text(text = "Add")
+            }
+            OutlinedButton(onClick = {
+                if (itemIndexText.isNotBlank()) {
+                    items = items.toMutableList().apply {
+                        removeAt(itemIndexText.toInt())
+                    }
+                }
+            }) {
+                Text(text = "Delete")
+            }
+            OutlinedButton(onClick = { }) {
+                Text(text = "Update")
+            }
+        }
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            itemsIndexed(items) { _, item ->
+                ListITem(item = item)
+            }
         }
     }
+
 }
 
 @Composable
