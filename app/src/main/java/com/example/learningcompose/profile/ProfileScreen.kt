@@ -8,9 +8,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.IconButton
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,13 +71,24 @@ private fun SettingItems(modifier: Modifier = Modifier) {
                     .padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                val textColor = if (settingItem.title == "Logout") colorBlue else Color.White
+                val notificationToggle = remember {
+                    mutableStateOf(false)
+                }
+
                 Text(
                     text = settingItem.title,
-                    color = Color.White,
+                    color = textColor,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,
                     modifier = Modifier.weight(1f)
                 )
+
+                if (settingItem.title == "Notification") {
+                    Switch(checked = notificationToggle.value, onCheckedChange = {
+                        notificationToggle.value = notificationToggle.value.not()
+                    })
+                }
 
                 if (settingItem.hasArrow) {
                     Image(
