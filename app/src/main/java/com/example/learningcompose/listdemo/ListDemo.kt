@@ -50,23 +50,24 @@ fun ListDemo() {
             OutlinedButton(onClick = {
                 if (itemIndexText.isNotBlank()) {
                     val newItem = ListItem("New Item with index: $itemIndexText")
-                    items = items.toMutableList().apply {
-                        add(itemIndexText.toInt(), newItem)
-                    }
+                    items = items.addItemAtStart(newItem)
                 }
             }) {
                 Text(text = "Add")
             }
             OutlinedButton(onClick = {
                 if (itemIndexText.isNotBlank()) {
-                    items = items.toMutableList().apply {
-                        removeAt(itemIndexText.toInt())
-                    }
+                    val newItems = items.deleteItem(itemIndexText.toInt())
+                    items = newItems
                 }
             }) {
                 Text(text = "Delete")
             }
-            OutlinedButton(onClick = { }) {
+            OutlinedButton(onClick = {
+                val item = items[0]
+                val newItem = item.copy(title = item.title + "Updated")
+                items = items.updateItem(newItem) { it.title == item.title }
+            }) {
                 Text(text = "Update")
             }
         }
