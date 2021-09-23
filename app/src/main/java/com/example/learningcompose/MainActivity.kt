@@ -22,6 +22,7 @@ import com.example.learningcompose.meek.PasscodeScreen
 import com.example.learningcompose.meekregister.AppTextField
 import com.example.learningcompose.meekregister.MeekRegisterScreen
 import com.example.learningcompose.meekregister.TextFieldHint
+import com.example.learningcompose.tabs.TabsScreen
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.ViewWindowInsetObserver
 
@@ -32,13 +33,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-        findViewById<ComposeView>(R.id.composeView).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                PasscodeScreen()
-            }
+        setContent {
+            TabsScreen()
         }
+
     }
 
     private fun toast(message: String) {
